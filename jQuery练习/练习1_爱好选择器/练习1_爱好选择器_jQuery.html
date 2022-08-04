@@ -1,0 +1,104 @@
+﻿<!--
+ * @Author: wangqiankun 2353327663@qq.com
+ * @Date: 2017-05-21 23:50:58
+ * @LastEditors: wangqiankun 2353327663@qq.com
+ * @LastEditTime: 2022-07-29 17:05:11
+ * @FilePath: \jQueryTest\work_blank\练习\练习1_爱好选择器\练习1_爱好选择器_jQuery.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEr
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>全选练习</title>
+  <script src="js/jquery-1.10.1.js"></script>r
+  <script>
+    $(function(){
+      var status = false;
+      // 全选按钮功能
+      $(':button:first').click(function(){
+        $(':checkbox').prop('checked',true);
+        status = true;
+        $(':checkbox:first').prop('checked',status);
+      })
+
+      // 全不选按钮功能
+      $(':button:eq(1)').click(function(){
+        $(':checkbox').prop('checked',false);
+        status =false;
+        $(':checkbox:first').prop('checked',status);
+      })
+
+      // 反选按钮功能
+      $(':button:eq(2)').click(function(){
+        status = true;
+        var $checkboxs = $(':checkbox:not(":checkbox:first")');
+
+
+        // $checkboxs.each(function(){
+        //   this.checked = !this.checked;
+        // })
+
+        for(var i = 0;i<$checkboxs.length;i++){
+          if($($checkboxs[i]).prop('checked')){
+            status = false;
+          }
+          var flag = $($checkboxs[i]).prop('checked');
+          $($checkboxs[i]).prop('checked',!flag);
+        }
+        $(':checkbox:first').prop('checked',status);
+      })
+
+      // 提交按钮功能
+      $(':button:last').click(function(){
+        var $checks= $(':checkbox:not(":checkbox:first")');
+        for(var i = 0;i<$checks.length;i++){
+          if($($checks[i]).prop('checked')){
+            alert($($checks[i]).val());
+          }
+        }
+      })
+
+      // 第一个全选、反选框功能
+      $(':checkbox:first').click(function(){
+        var $lis = $(':checkbox:not(":checkbox:first")');
+        status = !status;
+        for(var i = 0;i<$lis.length;i++){
+          $($lis[i]).prop('checked',status);
+        }
+      })
+
+      // 给每一个按钮都绑定监测事件
+      $(':checkbox:not(":checkbox:first")').click(function(){
+        var $lists = $(':checkbox:not(":checkbox:first")');
+        status = true;
+        for(var i = 0;i<$lists.length;i++){
+          if(!$($lists[i]).prop('checked')){
+            status = false;
+
+          }
+        }
+        $(':checkbox:first').prop('checked',status);
+      })
+    })
+  </script>
+</head>
+<body>
+<form>
+  你爱好的运动是？<input type="checkbox" id="checkedAllBox"/>全选/全不选
+
+  <br/>
+  <input type="checkbox" name="items" value="足球"/>足球
+  <input type="checkbox" name="items" value="篮球"/>篮球
+  <input type="checkbox" name="items" value="羽毛球"/>羽毛球
+  <input type="checkbox" name="items" value="乒乓球"/>乒乓球
+  <br/>
+  <input type="button" id="checkedAllBtn" value="全　选"/>
+  <input type="button" id="checkedNoBtn" value="全不选"/>
+  <input type="button" id="checkedRevBtn" value="反　选"/>
+  <input type="button" id="sendBtn" value="提　交"/>
+</form>
+
+</body>
+
+</html>
